@@ -12,7 +12,6 @@ class App extends Component {
       searchfield: ''
     }
     this.onSearchChange = this.onSearchChange.bind(this)
-    this.filterMoviesBy = this.filterMoviesBy.bind(this)
   }
 
   onSearchChange(e){
