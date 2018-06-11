@@ -1,13 +1,13 @@
 import React from 'react';
 import Movie from './Movie';
-import posters from '../posters.js'
+import movies from '../movies.js'
 
 
-const MovieList = () =>
+const MovieList = ({ movies }) =>
   (
     <div>
       {
-        posters.map(({poster, id, title, genre}, i) => (
+        movies.map(({poster, id, title, genre}, i) => (
             <Movie
               key={i}
               id={id}
