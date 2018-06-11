@@ -1,7 +1,5 @@
 import React from 'react';
 import Movie from './Movie';
-import movies from '../movies.js'
-
 
 const MovieList = ({ movies }) =>
   (
@@ -19,8 +17,6 @@ const MovieList = ({ movies }) =>
           )
         }
     </div>
-
-    )
-
+  )
 
 export default MovieList
