@@ -1,4 +1,4 @@
-const posters = [
+const movies = [
   {
     "id": 1,
     "title": 'Deadpool',
@@ -61,4 +61,4 @@ const posters = [
   }
 ];
 
-export default posters;
+export default movies;
