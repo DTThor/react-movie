@@ -7,20 +7,20 @@ const MovieList = () =>
   (
     <div>
       {
-        posters.map((user, i) => {
-          return (
+        posters.map(({poster, id, title, genre}, i) => (
             <Movie
               key={i}
-              id={posters[i].id}
-              title={posters[i].title}
-              genre={posters[i].genre}
-              poster={posters[i].poster}
+              id={id}
+              title={title}
+              genre={genre}
+              poster={poster}
               />
-          );
-        })
-      }
+            )
+          )
+        }
     </div>
-  )
+
+    )
 
 
 export default MovieList
