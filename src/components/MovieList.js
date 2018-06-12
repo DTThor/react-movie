@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Movie from './Movie';
 
-const MovieList = ({ movies }) =>
-  (
-    <div>
-      {
-        movies.map(({poster, id, title, genre}, i) => (
-            <Movie
-              key={i}
-              id={id}
-              title={title}
-              genre={genre}
-              poster={poster}
-              />
+class MovieList extends Component{
+  render(){
+    const {movies} = this.props;
+    return (
+      <div>
+        {
+          movies.map(({Poster, imdbID, Title, Year}, i) => (
+              <Movie
+                key= {i}
+                Title={Title}
+                Year={Year}
+                Poster={Poster}
+                />
+              )
             )
-          )
-        }
-    </div>
-  )
+          }
+      </div>
+    )
+  }
+}
 
 export default MovieList

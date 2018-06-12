@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Movie = ({ title, genre, id, poster }) =>
-   (
-    <div className='tc grow br3 pa3 ma2 dib bw2 shadow-5 bg-light-blue'>
-      <img alt='poster' src={poster} />
-      <div>
-        <h3>{title}</h3>
-        <p className='f7'>{genre}</p>
+class Movie extends Component {
+  render(){
+    const {Title, Year, imdbID, Poster} = this.props;
+    return (
+      <div className='tc grow br3 pa3 ma2 dib bw2 shadow-5 bg-light-blue'>
+        <img alt='poster' src={Poster} />
+        <div>
+          <h4>{Title}</h4>
+          <p className='f6'>{Year}</p>
+        </div>
       </div>
-    </div>
-  )
-
+    )
+  }
+}
 export default Movie

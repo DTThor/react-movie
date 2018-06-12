@@ -1,37 +1,47 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import Movie from './components/Movie'
 import MovieList from './components/MovieList'
 import SearchBar from './components/SearchBar'
-import movies from './movies.js'
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      movies,
-      searchField: ''
+      movies: [],
+      search: ''
     }
-    this.onSearchChange = this.onSearchChange.bind(this)
+    this.handleSearchChange = this.handleSearchChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  onSearchChange(e){
-    this.setState({ searchField: e.target.value })
+  fetchMovies(search){
+    const { movies } = this.state
+    let typedSearch = `http://www.omdbapi.com/?apikey=df1379a2&s=${search}`
+    axios.get(typedSearch)
+    .then(result=> this.setState({movies: result.data.Search}))
   }
 
-  filterMoviesBy({ movies, searchField }){
-    return movies.filter(movie =>
-       movie.title.toLowerCase().includes(searchField.toLowerCase())
-    )
+  handleSearchChange(e){
+    this.setState({ search: e.target.value })
   }
 
+  handleSubmit(e){
+    const { search } = this.state
+    this.fetchMovies(search)
+    e.preventDefault()
+  }
 
 
   render(){
-    const {movies, searchField} = this.state
+    const {movies, search} = this.state
     return (
       <div className="tc code">
-        <SearchBar searchChange={this.onSearchChange}/>
-        <MovieList movies={this.filterMoviesBy({movies, searchField})}/>
+        <SearchBar
+          handleSearchChange={this.handleSearchChange}
+          handleSubmit={this.handleSubmit}
+        />
+        <MovieList movies={movies} />
       </div>
     )
   }
