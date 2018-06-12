@@ -10,6 +10,7 @@ const SearchBar = ({ search, handleSearchChange, handleSubmit }) =>
         onChange={handleSearchChange}
       />
       <input
+        disabled={!search}
         className="pa2 bw2 b--blue"
         type="submit"
         onClick={handleSubmit}
