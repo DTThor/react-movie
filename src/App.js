@@ -5,8 +5,8 @@ import Header from './components/Header'
 import MovieList from './components/MovieList'
 import SearchBar from './components/SearchBar'
 
-const PreSearch = () => <h1> Search a massive database of movies and TV shows! </h1>
-const EmptySearch = () => <h3> Movie not found! </h3>
+const DEFAULT_STATUS = 'Search a massive database of movies and TV shows!'
+const SearchStatus = ({text}) => (<h1>{text}</h1>)
 
 class App extends Component {
   constructor() {
@@ -14,35 +14,36 @@ class App extends Component {
     this.state = {
       movies: [],
       search: '',
-      error: ''
+      status: DEFAULT_STATUS
     }
     this.handleSearchChange = this.handleSearchChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   fetchMovies(search){
-    const { movies } = this.state
+    const { movies, status } = this.state
     let typedSearch = `http://www.omdbapi.com/?apikey=df1379a2&s=${search}`
     axios.get(typedSearch)
     .then(result=> {
-      return result.data.Error ? this.setState({error: result.data.Error})
+      return result.data.Error ? this.setState({status: result.data.Error})
       : this.setState({movies: result.data.Search})
     })
   }
 
   handleSearchChange(e){
-    this.setState({ search: e.target.value, error: '', movies: [] })
+    this.setState({ search: e.target.value, status: DEFAULT_STATUS, movies: [] })
   }
 
   handleSubmit(e){
     e.preventDefault()
-    const { search, movies } = this.state
+    const { search, status } = this.state
+    this.setState({ status: '' })
     this.fetchMovies(search)
   }
 
 
   render(){
-    const {movies, search, error} = this.state
+    const {movies, search, status} = this.state
     return (
       <div className="tc code bg-lightest-blue">
         <Header />
@@ -51,8 +52,8 @@ class App extends Component {
           handleSearchChange={this.handleSearchChange}
           handleSubmit={this.handleSubmit}
         />
-        {error && <EmptySearch /> }
-        {movies.length === 0 && !error ? <PreSearch /> : <MovieList movies={movies} />}
+        {status && <SearchStatus text={status} /> }
+        {movies.length === 0 && !status ? <SearchStatus text={status} /> : <MovieList movies={movies} />}
 
       </div>
     )
