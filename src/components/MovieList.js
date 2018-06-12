@@ -1,17 +1,16 @@
-import React from 'react';
-import Movie from './Movie';
+import React, { Component } from 'react';
+import MovieCard from './MovieCard';
 
-const MovieList = ({ movies }) =>
+const MovieList = ({movies}) =>
   (
     <div>
       {
-        movies.map(({poster, id, title, genre}, i) => (
-            <Movie
-              key={i}
-              id={id}
-              title={title}
-              genre={genre}
-              poster={poster}
+        movies.map((movie, i) => (
+            <MovieCard
+              key= {i}
+              title={movie.Title}
+              year={movie.Year}
+              poster={movie.Poster}
               />
             )
           )
