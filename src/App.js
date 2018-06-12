@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Movie from './components/Movie'
+import MovieCard from './components/MovieCard'
 import Header from './components/Header'
 import MovieList from './components/MovieList'
 import SearchBar from './components/SearchBar'
 
 const DEFAULT_STATUS = 'Search a massive database of movies and TV shows!'
-const SearchStatus = ({text}) => (<h1>{text}</h1>)
+const SearchStatus = ({text}) => <h1>{text}</h1>
 
 class App extends Component {
   constructor() {
@@ -18,15 +18,17 @@ class App extends Component {
     }
     this.handleSearchChange = this.handleSearchChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.clearSearch = this.clearSearch.bind(this)
   }
 
   fetchMovies(search){
     const { movies, status } = this.state
     let typedSearch = `http://www.omdbapi.com/?apikey=df1379a2&s=${search}`
     axios.get(typedSearch)
-    .then(result=> {
-      return result.data.Error ? this.setState({status: result.data.Error})
-      : this.setState({movies: result.data.Search})
+    .then(({ data }) => {
+      const status = data.Error || ''
+      const movies = data.Search || []
+      this.setState({ status, movies })
     })
   }
 
@@ -41,6 +43,12 @@ class App extends Component {
     this.fetchMovies(search)
   }
 
+  clearSearch(e){
+    e.preventDefault()
+    const { search, status, movies } = this.state
+    this.setState({ search: '', movies: [], status: DEFAULT_STATUS})
+  }
+
 
   render(){
     const {movies, search, status} = this.state
@@ -49,11 +57,12 @@ class App extends Component {
         <Header />
         <SearchBar
           search={search}
-          handleSearchChange={this.handleSearchChange}
-          handleSubmit={this.handleSubmit}
+          onSearchChange={this.handleSearchChange}
+          onSubmit={this.handleSubmit}
+          onCancel={this.clearSearch}
         />
         {status && <SearchStatus text={status} /> }
-        {movies.length === 0 && !status ? <SearchStatus text={status} /> : <MovieList movies={movies} />}
+        {movies.length > 0 && <MovieList movies={movies} />}
 
       </div>
     )
