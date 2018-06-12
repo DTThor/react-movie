@@ -29,8 +29,8 @@ class App extends Component {
     .then(({ data }) => {
       const status = data.Error || ''
       const movies = data.Search || []
-      this.setState({ status, movies })
-      data.Error && this.setState({ color: 'red' })
+      const color = data.Error ? 'red' : 'black'
+      this.setState({ status, movies, color })
     })
   }
 
