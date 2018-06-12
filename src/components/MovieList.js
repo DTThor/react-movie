@@ -7,12 +7,12 @@ class MovieList extends Component{
     return (
       <div>
         {
-          movies.map(({Poster, imdbID, Title, Year}, i) => (
+          movies.map((movie, i) => (
               <Movie
                 key= {i}
-                Title={Title}
-                Year={Year}
-                Poster={Poster}
+                title={movie.Title}
+                year={movie.Year}
+                poster={movie.Poster}
                 />
               )
             )
