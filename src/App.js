@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Movie from './components/Movie'
+import Header from './components/Header'
 import MovieList from './components/MovieList'
 import SearchBar from './components/SearchBar'
 
@@ -27,16 +28,30 @@ class App extends Component {
   }
 
   handleSubmit(e){
+    e.preventDefault()
     const { search } = this.state
     this.fetchMovies(search)
-    e.preventDefault()
   }
 
 
   render(){
     const {movies, search} = this.state
-    return (
-      <div className="tc code">
+    return movies.length < 1 ?
+    (
+      <div className="tc code bg-lightest-blue">
+        <Header />
+        <SearchBar
+          handleSearchChange={this.handleSearchChange}
+          handleSubmit={this.handleSubmit}
+        />
+        <h1>
+          Search a massive database of movies and TV shows!
+        </h1>
+      </div>
+    ) :
+     (
+      <div className="tc code bg-lightest-blue">
+        <Header />
         <SearchBar
           handleSearchChange={this.handleSearchChange}
           handleSubmit={this.handleSubmit}
