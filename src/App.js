@@ -7,7 +7,11 @@ import SearchBar from './components/SearchBar'
 import RecentSearches from './components/RecentSearches'
 
 const DEFAULT_STATUS = 'Search a massive database of movies and TV shows!'
-const SearchStatus = ({text, color}) => <div className='dib'><h1 className={color}>{text}</h1></div>
+const SearchStatus = ({text, color}) => (
+  <div className='dib'>
+    <h1 className={color}>{text}</h1>
+  </div>
+)
 
 class App extends Component {
   constructor() {
@@ -21,19 +25,20 @@ class App extends Component {
     }
     this.handleSearchChange = this.handleSearchChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleRecentSubmit = this.handleRecentSubmit.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
   }
 
   fetchMovies(search){
-    let { movies, status, color, history } = this.state
+    const { movies, status, color } = this.state
     let typedSearch = `http://www.omdbapi.com/?apikey=df1379a2&s=${search}`
     axios.get(typedSearch)
     .then(({ data }) => {
       const status = data.Error || ''
       const movies = data.Search || []
       const color = data.Error ? 'red' : 'black'
-      history = [search, ...this.state.history]
-      history.length > 5 && history.pop() 
+      const history = [search, ...this.state.history]
+      history.length > 5 && history.pop()
       this.setState({ status, movies, color, history })
     })
     .catch((error) => this.setState({ status: error.message || 'Something went wrong...', color: 'red'  }))
@@ -49,6 +54,12 @@ class App extends Component {
     this.setState({ status: 'Loading...' }, () => this.fetchMovies(search))
   }
 
+  handleRecentSubmit(e){
+    e.preventDefault()
+    const { search, status, history } = this.state
+    this.setState({ status: 'Loading...', search: e.target.innerText }, () => this.fetchMovies(this.state.search))
+  }
+
   clearSearch(e){
     e.preventDefault()
     const { search, status, movies, color } = this.state
@@ -61,7 +72,9 @@ class App extends Component {
     return (
       <div className="tc code bg-lightest-blue">
         <Header />
-        <RecentSearches history={history} />
+        <RecentSearches
+          onClick={this.handleRecentSubmit}
+          history={history} />
         <SearchBar
           search={search}
           status={status}

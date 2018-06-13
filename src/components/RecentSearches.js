@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-const RecentSearches = ({history}) =>
+const RecentSearches = ({ history, onClick }) =>
   (
     <div className='tc dib pa2 br3 ma0 bw2 shadow-2 bg-light-blue'>
       <h3>Last 5 Searches</h3>
       <div>
         {
           history.map((title, i) => (
-            <p key={i}>{title}</p>
+            <p key={i} className='underline-hover shadow-hover' onClick={onClick}>{title}</p>
           ))
         }
         </div>

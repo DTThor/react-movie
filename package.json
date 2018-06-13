@@ -31,6 +31,7 @@
     "react-dom": "^16.4.0",
     "style-loader": "^0.21.0",
     "tachyons": "^4.10.0",
+    "tachyons-hovers": "^2.5.1",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.3",
     "webpack-dev-server": "^3.1.4"
