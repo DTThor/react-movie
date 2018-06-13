@@ -4,9 +4,14 @@ import MovieCard from './components/MovieCard'
 import Header from './components/Header'
 import MovieList from './components/MovieList'
 import SearchBar from './components/SearchBar'
+import RecentSearches from './components/RecentSearches'
 
 const DEFAULT_STATUS = 'Search a massive database of movies and TV shows!'
-const SearchStatus = ({text, color}) => <h1 className={color}>{text}</h1>
+const SearchStatus = ({text, color}) => (
+  <div className='dib'>
+    <h1 className={color}>{text}</h1>
+  </div>
+)
 
 class App extends Component {
   constructor() {
@@ -15,10 +20,12 @@ class App extends Component {
       movies: [],
       search: '',
       status: DEFAULT_STATUS,
-      color: 'black'
+      color: 'black',
+      history: []
     }
     this.handleSearchChange = this.handleSearchChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleRecentSubmit = this.handleRecentSubmit.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
   }
 
@@ -30,7 +37,9 @@ class App extends Component {
       const status = data.Error || ''
       const movies = data.Search || []
       const color = data.Error ? 'red' : 'black'
-      this.setState({ status, movies, color })
+      const history = [search, ...this.state.history]
+      history.length > 5 && history.pop()
+      this.setState({ status, movies, color, history })
     })
     .catch((error) => this.setState({ status: error.message || 'Something went wrong...', color: 'red'  }))
   }
@@ -41,8 +50,14 @@ class App extends Component {
 
   handleSubmit(e){
     e.preventDefault()
-    const { search, status } = this.state
+    const { search, status, history } = this.state
     this.setState({ status: 'Loading...' }, () => this.fetchMovies(search))
+  }
+
+  handleRecentSubmit(e){
+    e.preventDefault()
+    const { search, status, history } = this.state
+    this.setState({ status: 'Loading...', search: e.target.innerText }, () => this.fetchMovies(this.state.search))
   }
 
   clearSearch(e){
@@ -53,10 +68,13 @@ class App extends Component {
 
 
   render(){
-    const {movies, search, status, color} = this.state
+    const {movies, search, status, color, history} = this.state
     return (
       <div className="tc code bg-lightest-blue">
         <Header />
+        <RecentSearches
+          onClick={this.handleRecentSubmit}
+          history={history} />
         <SearchBar
           search={search}
           status={status}
@@ -66,7 +84,6 @@ class App extends Component {
         />
         {status && <SearchStatus text={status} color={color} /> }
         {movies.length > 0 && <MovieList movies={movies} />}
-
       </div>
     )
 
