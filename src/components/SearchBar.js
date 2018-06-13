@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SearchBar = ({ search, onSearchChange, onSubmit, onCancel }) =>
+const SearchBar = ({ search, status, onSearchChange, onSubmit, onCancel }) =>
    (
     <div className="pa2">
       <input
@@ -11,7 +11,7 @@ const SearchBar = ({ search, onSearchChange, onSubmit, onCancel }) =>
         onChange={onSearchChange}
       />
       <input
-        disabled={!search}
+        disabled={!search || status === 'Loading...'}
         className="pa2 bw2 b--blue"
         type="submit"
         onClick={onSubmit}

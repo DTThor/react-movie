@@ -42,8 +42,7 @@ class App extends Component {
   handleSubmit(e){
     e.preventDefault()
     const { search, status } = this.state
-    this.setState({ status: '' })
-    this.fetchMovies(search)
+    this.setState({ status: 'Loading...' }, () => this.fetchMovies(search))
   }
 
   clearSearch(e){
@@ -60,6 +59,7 @@ class App extends Component {
         <Header />
         <SearchBar
           search={search}
+          status={status}
           onSearchChange={this.handleSearchChange}
           onSubmit={this.handleSubmit}
           onCancel={this.clearSearch}
