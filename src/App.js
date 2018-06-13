@@ -37,7 +37,7 @@ class App extends Component {
       const status = data.Error || ''
       const movies = data.Search || []
       const color = data.Error ? 'red' : 'black'
-      const history = [search, ...this.state.history]
+      const history = this.state.history.includes(search) ? this.state.history : [search, ...this.state.history]
       history.length > 5 && history.pop()
       this.setState({ status, movies, color, history })
     })
