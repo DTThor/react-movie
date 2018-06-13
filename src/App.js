@@ -31,7 +31,8 @@ class App extends Component {
       const movies = data.Search || []
       const color = data.Error ? 'red' : 'black'
       this.setState({ status, movies, color })
-    }).catch((error) => this.setState({ status: error.message || 'Something went wrong...', color: 'red'  }))
+    })
+    .catch((error) => this.setState({ status: error.message || 'Something went wrong...', color: 'red'  }))
   }
 
   handleSearchChange(e){
