@@ -32,7 +32,7 @@ class App extends Component {
 
   fetchMovies(search){
     const { movies, status, color } = this.state
-    let typedSearch = `http://www.omdbapi.com/?apikey=df1379a2&s=${search}`
+    let typedSearch = `https://www.omdbapi.com/?apikey=df1379a2&s=${search}`
     axios.get(typedSearch)
     .then(({ data }) => {
       const status = data.Error || ''
