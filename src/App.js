@@ -27,6 +27,7 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleRecentSubmit = this.handleRecentSubmit.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
+    this.clearHistory = this.clearHistory.bind(this)
   }
 
   fetchMovies(search){
@@ -66,6 +67,12 @@ class App extends Component {
     this.setState({ search: '', movies: [], status: DEFAULT_STATUS, color: 'black'})
   }
 
+  clearHistory(e){
+    e.preventDefault()
+    const { history, search, status, movies } = this.state
+    this.setState({ history: [], movies: [], search: '', status: DEFAULT_STATUS })
+  }
+
 
   render(){
     const {movies, search, status, color, history} = this.state
@@ -74,7 +81,9 @@ class App extends Component {
         <Header />
         <RecentSearches
           onClick={this.handleRecentSubmit}
-          history={history} />
+          history={history}
+          clearHistory={this.clearHistory}
+        />
         <SearchBar
           search={search}
           status={status}
