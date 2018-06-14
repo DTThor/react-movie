@@ -46,7 +46,7 @@ class App extends Component {
   }
 
   handleSearchChange(e){
-    this.setState({ search: e.target.value, status: DEFAULT_STATUS, movies: [] })
+    this.setState({ search: e.target.value, status: DEFAULT_STATUS, movies: [], color: 'black' })
   }
 
   handleSubmit(e){
@@ -62,7 +62,6 @@ class App extends Component {
   }
 
   clearSearch(e){
-    e.preventDefault()
     const { search, status, movies, color } = this.state
     this.setState({ search: '', movies: [], status: DEFAULT_STATUS, color: 'black'})
   }
