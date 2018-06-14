@@ -2,9 +2,9 @@ import React from 'react';
 
 const SearchBar = ({ search, status, onSearchChange, onSubmit, onCancel }) =>
    (
-    <div className="pa2 dib w-80">
+    <div className="pa2 w-100">
       <input
-        className="bw2 pa2 b--blue w-60-ns"
+        className="bw2 pa2 b--blue w-50-ns"
         value={search}
         type="search"
         placeholder="Search..."

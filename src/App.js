@@ -27,17 +27,18 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleRecentSubmit = this.handleRecentSubmit.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
+    this.clearHistory = this.clearHistory.bind(this)
   }
 
   fetchMovies(search){
     const { movies, status, color } = this.state
-    let typedSearch = `http://www.omdbapi.com/?apikey=df1379a2&s=${search}`
+    let typedSearch = `https://www.omdbapi.com/?apikey=df1379a2&s=${search}`
     axios.get(typedSearch)
     .then(({ data }) => {
       const status = data.Error || ''
       const movies = data.Search || []
       const color = data.Error ? 'red' : 'black'
-      const history = [search, ...this.state.history]
+      const history = this.state.history.includes(search) ? this.state.history : [search, ...this.state.history]
       history.length > 5 && history.pop()
       this.setState({ status, movies, color, history })
     })
@@ -45,7 +46,7 @@ class App extends Component {
   }
 
   handleSearchChange(e){
-    this.setState({ search: e.target.value, status: DEFAULT_STATUS, movies: [] })
+    this.setState({ search: e.target.value, status: DEFAULT_STATUS, movies: [], color: 'black' })
   }
 
   handleSubmit(e){
@@ -61,9 +62,14 @@ class App extends Component {
   }
 
   clearSearch(e){
-    e.preventDefault()
     const { search, status, movies, color } = this.state
     this.setState({ search: '', movies: [], status: DEFAULT_STATUS, color: 'black'})
+  }
+
+  clearHistory(e){
+    e.preventDefault()
+    const { history, search, status, movies } = this.state
+    this.setState({ history: [], movies: [], search: '', status: DEFAULT_STATUS })
   }
 
 
@@ -74,7 +80,9 @@ class App extends Component {
         <Header />
         <RecentSearches
           onClick={this.handleRecentSubmit}
-          history={history} />
+          history={history}
+          clearHistory={this.clearHistory}
+        />
         <SearchBar
           search={search}
           status={status}
