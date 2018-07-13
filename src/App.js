@@ -6,6 +6,7 @@ import MovieList from './components/MovieList'
 import SearchBar from './components/SearchBar'
 import RecentSearches from './components/RecentSearches'
 
+const API_KEY = 'df1379a2'
 const DEFAULT_STATUS = 'Search a massive database of movies and TV shows!'
 const SearchStatus = ({text, color}) => (
   <div className='dib'>
@@ -32,7 +33,7 @@ class App extends Component {
 
   fetchMovies(search){
     const { movies, status, color } = this.state
-    let typedSearch = `https://www.omdbapi.com/?apikey=df1379a2&s=${search}`
+    let typedSearch = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${search}`
     axios.get(typedSearch)
     .then(({ data }) => {
       const status = data.Error || ''
