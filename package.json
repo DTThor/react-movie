@@ -29,6 +29,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -55,9 +56,10 @@
     "eslint-plugin-react": "^7.9.1",
     "eslint-plugin-standard": "^3.1.0",
     "nodemon": "^1.18.1",
+    "supertest": "^3.1.0",
     "webpack": "^4.11.1"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./test/setUpTests.js"
+    "setupTestFrameworkScriptFile": "./test/frontend/setUpTests.js"
   }
 }
