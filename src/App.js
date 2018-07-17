@@ -32,8 +32,8 @@ class App extends Component {
 
   fetchMovies(search){
     const { movies, status, color } = this.state
-    const { API_URL } = process.env
-    let typedSearch =`${API_URL}${search}`
+    const { DEV_API_URL, PROD_API_URL, NODE_ENV } = process.env
+    let typedSearch =`${NODE_ENV === 'production' ? PROD_API_URL : DEV_API_URL}${search}`
     axios.get(typedSearch)
     .then(({ data }) => {
       const status = data.Error || ''

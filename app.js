@@ -12,9 +12,9 @@ const isDev = process.env.NODE_ENV === 'development'
 const isProd = process.env.NODE_ENV === 'production'
 if (isTest) {
   mongoose.connect(`${TEST_DB_NAME}`)
-}else if (isDev) {
+} else if (isDev) {
   mongoose.connect(`${DB_NAME}`)
-}else if (isProd) {
+} else if (isProd) {
   mongoose.connect(`${MONGODB_URI}`)
 }
 
