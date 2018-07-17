@@ -4,10 +4,9 @@
   "description": "Redoing the movie poster project with React for Moove-it Apprenticeship",
   "private": true,
   "scripts": {
-    "build": "node_modules/.bin/webpack",
+    "build": "NODE_ENV='production' node_modules/.bin/webpack -p",
     "webpack:dev": "node_modules/.bin/webpack-dev-server",
     "start": "node server.js",
-    "postinstall": "node_modules/.bin/webpack -p",
     "test": "jest --watch",
     "dev": "nodemon server.js"
   },
