@@ -6,8 +6,9 @@ const cors = require('cors')
 const app = express()
 
 mongoose.Promise = global.Promise
+const { TEST_DB_NAME, DB_NAME } = process.env
 const isTest = process.env.NODE_ENV === 'test'
-mongoose.connect(`mongodb://localhost/${isTest ? 'Moviedb_test' : 'Moviedb'}`)
+mongoose.connect(`${isTest ? TEST_DB_NAME : DB_NAME}`)
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))

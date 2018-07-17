@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 const axios = require('axios')
 const Movie = require('../../models/movie')
-const API_KEY = 'df1379a2'
 
 const searchMovies = (req, res) => {
-  let typedSearch = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${req.params.query}`
+  const { OMDB_API_KEY } = process.env
+  let typedSearch = `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${req.params.query}`
   axios.get(typedSearch)
   .then(({ data }) => {
     data.Error ? res.json(data) :
