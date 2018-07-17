@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node_modules/.bin/webpack",
     "webpack:dev": "node_modules/.bin/webpack-dev-server",
-    "start": "node_modules/.bin/webpack-dev-server && node server.js",
+    "start": "node server.js",
+    "postinstall": "node_modules/.bin/webpack -p",
     "test": "jest --watch",
     "dev": "nodemon server.js"
   },
