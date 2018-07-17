@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchBar from '../../src/components/SearchBar'
+import SearchBar from '../../../src/components/SearchBar'
 import {shallow, mount} from 'enzyme'
 
 it('renders without crashing', () => {

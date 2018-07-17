@@ -4,7 +4,7 @@ const SearchBar = ({ search, status, onSearchChange, onSubmit, onCancel }) =>
    (
     <div className="pa2 w-100">
       <input
-        className="bw2 pa2 b--blue w-50-ns"
+        className="outline-0 bw2 pa2 b--blue w-50-ns"
         value={search}
         type="search"
         placeholder="Search..."

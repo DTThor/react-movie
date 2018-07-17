@@ -1,5 +1,5 @@
 import React from 'react'
-import RecentSearches from '../../src/components/RecentSearches'
+import RecentSearches from '../../../src/components/RecentSearches'
 import { shallow, mount } from 'enzyme'
 
 const testHistory = [

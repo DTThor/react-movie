@@ -32,13 +32,14 @@ class App extends Component {
 
   fetchMovies(search){
     const { movies, status, color } = this.state
-    let typedSearch = `https://www.omdbapi.com/?apikey=df1379a2&s=${search}`
+    const { API_URL } = process.env
+    let typedSearch =`${API_URL}${search}`
     axios.get(typedSearch)
     .then(({ data }) => {
       const status = data.Error || ''
       const movies = data.Search || []
       const color = data.Error ? 'red' : 'black'
-      const history = this.state.history.includes(search) ? this.state.history : [search, ...this.state.history]
+      const history = this.state.history.includes(search) || data.Error ? this.state.history : [search, ...this.state.history]
       history.length > 5 && history.pop()
       this.setState({ status, movies, color, history })
     })

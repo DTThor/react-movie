@@ -1,5 +1,5 @@
 import React from 'react'
-import MovieList from '../../src/components/MovieList'
+import MovieList from '../../../src/components/MovieList'
 import {shallow} from 'enzyme'
 
 const testMovies = [
