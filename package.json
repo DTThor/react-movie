@@ -4,10 +4,11 @@
   "description": "Redoing the movie poster project with React for Moove-it Apprenticeship",
   "private": true,
   "scripts": {
-    "build": "node_modules/.bin/webpack",
+    "build": "NODE_ENV='production' node_modules/.bin/webpack -p",
     "webpack:dev": "node_modules/.bin/webpack-dev-server",
+    "start": "node server.js",
     "test": "jest --watch",
-    "start": "nodemon server.js"
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,9 @@
     "url": "https://github.com/DTThor/react-movie/issues"
   },
   "homepage": "https://github.com/DTThor/react-movie#readme",
+  "engines": {
+    "node": "8.11.3"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",

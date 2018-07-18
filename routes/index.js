@@ -3,6 +3,6 @@ const searchMovies = require("../operations/movies/searchMovies")
 const getAll = require("../operations/movies/getAll")
 
 router.get('/search/:query', searchMovies)
-router.get('/movies', getAll)
+router.get('/', getAll)
 
 module.exports = router
