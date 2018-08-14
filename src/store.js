@@ -1,5 +1,5 @@
-import { createStore, compose } from 'redux';
-import * as actionCreators from './actions/actionCreators';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 // import the root reducer
 import rootReducer from './reducers/index';
 
@@ -9,7 +9,7 @@ const defaultState = {
   search: '',
 };
 
-const store = createStore(rootReducer, defaultState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-// store.dispatch(actionCreators.submitSearch())
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, defaultState, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 export default store;

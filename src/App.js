@@ -58,7 +58,8 @@ class App extends Component {
     e.preventDefault()
     const { search, status, history } = this.state
     this.setState({ status: 'Loading...' }, () => this.fetchMovies(search))
-    this.props.submitSearch(this.props.search)
+    this.props.requestMovies(this.props.search)
+    this.props.fetchMovies(this.props.search)
   }
 
   handleRecentSubmit(e){
