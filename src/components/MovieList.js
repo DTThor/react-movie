@@ -8,7 +8,7 @@ const MovieList = ({movies}) =>
         movies.map((movie, i) => (
             <MovieCard
               key= {i}
-              title={movie.Title}
+              title={movie.Title.length > 30 ? `${movie.Title.substring(0, 28)}...` : movie.Title}
               year={movie.Year}
               poster={movie.Poster}
               />

@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import axios from 'axios'
 import MovieCard from './components/MovieCard'
 import Header from './components/Header'
 import MovieList from './components/MovieList'
 import SearchBar from './components/SearchBar'
 import RecentSearches from './components/RecentSearches'
+import * as actionCreators from './actions/actionCreators'
+import { DEFAULT_STATUS } from '../constants'
 
-const DEFAULT_STATUS = 'Search a massive database of movies and TV shows!'
 const SearchStatus = ({text, color}) => (
   <div className='dib'>
     <h1 className={color}>{text}</h1>
@@ -48,29 +51,33 @@ class App extends Component {
 
   handleSearchChange(e){
     this.setState({ search: e.target.value, status: DEFAULT_STATUS, movies: [], color: 'black' })
+    this.props.typeSearch(e.target.value)
   }
 
   handleSubmit(e){
     e.preventDefault()
     const { search, status, history } = this.state
     this.setState({ status: 'Loading...' }, () => this.fetchMovies(search))
+    this.props.submitSearch(this.props.search)
   }
 
   handleRecentSubmit(e){
     e.preventDefault()
     const { search, status, history } = this.state
-    this.setState({ status: 'Loading...', search: e.target.innerText }, () => this.fetchMovies(this.state.search))
+    this.setState({ status: 'Loading...', search: e.target.innerText }, () => this.fetchMovies(search))
   }
 
   clearSearch(e){
     const { search, status, movies, color } = this.state
     this.setState({ search: '', movies: [], status: DEFAULT_STATUS, color: 'black'})
+    this.props.clearSearch();
   }
 
   clearHistory(e){
     e.preventDefault()
     const { history, search, status, movies } = this.state
     this.setState({ history: [], movies: [], search: '', status: DEFAULT_STATUS })
+    this.props.clearHistory();
   }
 
 
@@ -100,5 +107,17 @@ class App extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    movies: state.movies,
+    search: state.search,
+    history: state.history
+  }
+}
 
-export default App
+function mapDispachToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+
+export default connect(mapStateToProps, mapDispachToProps)(App);
