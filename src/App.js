@@ -20,8 +20,6 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      movies: [],
-      search: '',
       status: DEFAULT_STATUS,
       color: 'black',
       history: []
@@ -34,17 +32,16 @@ class App extends Component {
   }
 
   fetchMovies(search){
-    const { movies, status, color } = this.state
+    const { status, color } = this.state
     const { DEV_API_URL, PROD_API_URL, NODE_ENV } = process.env
     let typedSearch = NODE_ENV === 'development' ? DEV_API_URL : PROD_API_URL
     axios.get(`${typedSearch}${search}`)
     .then(({ data }) => {
       const status = data.Error || ''
-      const movies = data.Search || []
       const color = data.Error ? 'red' : 'black'
       const history = this.state.history.includes(search) || data.Error ? this.state.history : [search, ...this.state.history]
       history.length > 5 && history.pop()
-      this.setState({ status, movies, color, history })
+      this.setState({ status, color, history })
     })
     .catch((error) => this.setState({ status: error.message || 'Something went wrong...', color: 'red'  }))
   }
@@ -56,34 +53,35 @@ class App extends Component {
 
   handleSubmit(e){
     e.preventDefault()
-    const { search, status, history } = this.state
-    this.setState({ status: 'Loading...' }, () => this.fetchMovies(search))
+    const { status, history } = this.state
+    this.setState({ status: 'Loading...' }, () => this.fetchMovies(this.props.search))
     this.props.requestMovies(this.props.search)
     this.props.fetchMovies(this.props.search)
   }
 
   handleRecentSubmit(e){
     e.preventDefault()
-    const { search, status, history } = this.state
-    this.setState({ status: 'Loading...', search: e.target.innerText }, () => this.fetchMovies(search))
+    const { status, history } = this.state
+    this.setState({ status: 'Loading...' }, () => this.fetchMovies(this.props.search))
   }
 
   clearSearch(e){
-    const { search, status, movies, color } = this.state
-    this.setState({ search: '', movies: [], status: DEFAULT_STATUS, color: 'black'})
+    const { status, color } = this.state
+    this.setState({ status: DEFAULT_STATUS, color: 'black'})
     this.props.clearSearch();
   }
 
   clearHistory(e){
     e.preventDefault()
-    const { history, search, status, movies } = this.state
-    this.setState({ history: [], movies: [], search: '', status: DEFAULT_STATUS })
+    const { history, search, status } = this.state
+    this.setState({ history: [], status: DEFAULT_STATUS })
     this.props.clearHistory();
+    this.props.clearSearch();
   }
 
 
   render(){
-    const {movies, search, status, color, history} = this.state
+    const { status, color, history } = this.state
     return (
       <div className="tc code bg-lightest-blue">
         <Header />
@@ -93,14 +91,14 @@ class App extends Component {
           clearHistory={this.clearHistory}
         />
         <SearchBar
-          search={search}
+          search={this.props.search}
           status={status}
           onSearchChange={this.handleSearchChange}
           onSubmit={this.handleSubmit}
           onCancel={this.clearSearch}
         />
         {status && <SearchStatus text={status} color={color} /> }
-        {movies.length > 0 && <MovieList movies={movies} />}
+        {this.props.movies.movies && <MovieList />}
       </div>
     )
 
@@ -112,7 +110,6 @@ function mapStateToProps(state) {
   return {
     movies: state.movies,
     search: state.search,
-    history: state.history
   }
 }
 
