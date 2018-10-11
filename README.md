@@ -1,2 +1,2 @@
 # react-movie
-Redoing the movie poster project with React for Moove-it Apprenticeship
+Movie poster search application for practice with React and Redux using OMDB api
