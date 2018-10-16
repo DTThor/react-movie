@@ -63,6 +63,8 @@ class App extends Component {
     e.preventDefault()
     const { status, history } = this.state
     this.setState({ status: 'Loading...' }, () => this.fetchMovies(this.props.search))
+    this.props.requestMovies(this.props.search)
+    this.props.fetchMovies(this.props.search)
   }
 
   clearSearch(e){
